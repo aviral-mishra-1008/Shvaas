@@ -1,0 +1,256 @@
+
+
+{% extends 'Vyas/basic.html' %}
+
+{% block title %} Sports Games and Fitness Equipment {% endblock %}
+
+{% block css %}    
+
+body {
+  background-image: url('https://www.thebusinessdesk.com/_files/images/feb_19/ICC-Cricket-World-Cup-CS_1-e1549973379404.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+    .navbar-dark{
+      background: rgb(36, 0, 0);
+background: linear-gradient(90deg, rgba(0, 36, 3, 0.37) 0%, rgba(82, 21, 77, 0.14) 35%, rgba(0,212,255,0.1227678571428571) 100%);
+    }
+    
+    div.ex1 {
+      
+      background-color: white);
+      width: 260px;
+      height: 210px;
+      overflow: scroll;
+    }
+    
+            .col-md-3
+            {
+            display: inline-block;
+            margin-left:-4px;
+            }
+            .carousel-indicators .active {
+            background-color: blue;
+              }
+            .col-md-3 img{
+            width:100%;
+            
+            }
+            body .carousel-indicator li{
+            background-color: blue;
+            }
+            body .carousel-indicators{
+            bottom: 0;
+            }
+            body .carousel-control-prev-icon,
+            body .carousel-control-next-icon{
+            background-color: blue;
+            }
+             body .no-padding{
+             padding-left: 0;
+             padding-right: 0;
+             }
+
+{% endblock %}
+
+
+
+
+{% block body %} 
+
+{% load static %}
+<div class="container">
+   
+  <div id="demo" class="carousel slide my-3" data-ride="carousel">
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+
+       {% for i in range %}
+      <li data-target="#demo" data-slide-to="{{i}}" ></li>
+      {% endfor %}
+    </ul>
+
+    <!--Slideshow starts here -->
+    <div class="container carousel-inner no-padding">
+      <div class="carousel-item active">
+
+     
+
+
+        {% for i in product %}
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: auto;" >
+            <img src='/media/{{i.product_image}}' class="card-img-top"  alt="...">
+            <div class="card-body">
+              <h5 class="card-title" id="namepr{{i.id}}">{{i.item_name}}</h5>
+              {{ i.sub_desc }}
+                  <br>
+                  <br>
+              <h6 class="card-title"> - {{i.brand_name}}</h6>
+              <p class="card-text">
+              
+                <ul>
+                  <li> {{i.d1}}</li>
+                  <li> {{i.d2}}</li>
+                  <li> {{i.d3}}</li>
+                  <li>
+                    Associated Sport - {{i.associated_sport}}
+                  </li>
+                  
+                    
+                  {% if i.category == "Cricket"  %}
+                  <li>
+                    Size - {{i.cricketbat_size}}
+                  </li>
+                  <li>
+                    Willow - {{i.cricketbat_willow}}
+                  </li>
+                  {%elif i.category == "Football"%}
+                  <li>
+                    Size - {{i.football_size}} 
+                  </li>
+                  <li>
+                    Weight   {{i.football_weight}}
+                  </li>
+                  {% elif i.category == "Table Tennis" %}
+                  <li>
+                    Material - {{i.tt_material}} p
+                  </li>
+                  
+
+                  {% endif %}
+                    
+                  <li>
+                    <b> PRICE - <span id="pricepr{{i.id}}">{{i.price}}</span> INR    </b>
+                  </li>
+
+                  
+                  
+
+
+                </ul>
+              
+
+
+              </p>
+              <a href="{{ i.off_site }}" class="btn btn-warning"> Official Site </a>
+              <br>
+              <br>
+              <span id="divpr{{i.id}}" class="divpr">
+                <button id= "pr{{i.id}}"class="btn btn-primary cartSports">Add To Cart</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+      </div>
+      <div class="carousel-item">
+        {% endif %}
+
+        {% endfor  %}
+      </div>
+
+
+
+    </div>
+  </div>
+
+    <!-- left and right controls for the slide -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+
+
+{% endblock%}
+
+  </div>
+
+
+
+  {% block js %}   
+  <script>
+    // Find out the cartSports items from localStorage
+    if (localStorage.getItem('cartSports') == null) {
+       var cartSports = {};
+   } else {
+       cartSports = JSON.parse(localStorage.getItem('cartSports'));
+       updateCart(cartSports);
+   }
+   // If the add to cartSports button is clicked, add/increment the item
+   //$('.cartSports').click(function() {
+   $('.divpr').on('click', 'button.cartSports', function() {
+       var idstr = this.id.toString();
+       if (cartSports[idstr] != undefined) {
+           qty = cartSports[idstr][0] + 1;
+           
+       } else {
+           qty = 1;
+           name = document.getElementById('name'+idstr).innerHTML;
+           price = document.getElementById('price'+idstr).innerHTML;
+           cartSports[idstr] = [qty, name , parseInt(price)];
+   
+       }
+       updateCart(cartSports);
+   });
+   //Add Popover to cartSports
+   $('#popcart').popover();
+   updatePopover(cartSports);
+   
+   function updatePopover(cartSports) {
+       console.log('We are inside updatePopover');
+       var popStr = "";
+       
+       popStr = popStr + "</div> <a href='/Vyas/Checkout'><button class='btn btn-primary' id ='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+       
+       document.getElementById('popcart').setAttribute('data-content', popStr);
+       $('#popcart').popover('show');
+   }
+   
+   function clearCart() {
+       cartSports = JSON.parse(localStorage.getItem('cartSports'));
+       for (var item in cartSports) {
+           document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cartSports">Add To Cart</button>'
+       }
+       
+       cartSports = {};
+       updateCart(cartSports);
+       localStorage.clear();
+       document.getElementById('clearCart').innerHTML=" <button class='btn btn-dark'  id ='clearCart'>Cleared</button>     " 
+   
+   }
+   
+   function updateCart(cartSports) {
+       var sum = 0;
+       for (var item in cartSports) {
+           sum = sum + cartSports[item][0];
+           document.getElementById('div'+item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cartSports[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+       }
+       localStorage.setItem('cartSports', JSON.stringify(cartSports));
+       
+       console.log(cartSports);
+       updatePopover(cartSports);
+   }
+   // If plus or minus button is clicked, change the cartSports as well as the display value
+   $('.divpr').on("click", "button.minus", function() {
+       a = this.id.slice(7, );
+       cartSports['pr' + a][0] = cartSports['pr' + a][0] - 1;
+       cartSports['pr' + a][0] = Math.max(0, cartSports['pr' + a][0]);
+       document.getElementById('valpr' + a).innerHTML = cartSports['pr' + a][0];
+       updateCart(cartSports);
+   });
+   $('.divpr').on("click", "button.plus", function() {
+       a = this.id.slice(6, );
+       cartSports['pr' + a][0] = cartSports['pr' + a][0] + 1;
+       document.getElementById('valpr' + a).innerHTML = cartSports['pr' + a][0];
+       updateCart(cartSports);
+   });
+       
+       
+       </script>
+{% endblock %}
+
+

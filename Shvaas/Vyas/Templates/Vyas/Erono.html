@@ -1,0 +1,45 @@
+{% extends 'Vyas/basic.html' %}
+
+    <title>{% block title %} Shvaas - Search {% endblock %} </title>
+    {% block body %} 
+    <style>
+body {
+  background-image: url('https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-4-full.jpg');
+}
+
+  .navbar-dark{
+          background: rgb(34,193,195);
+background: linear-gradient(197deg, rgba(34,193,195,1) 0%, rgba(187,122,190,0.4448967086834734) 79%, rgba(253,187,45,1) 100%);
+        }
+</style>
+    <body>
+<h1> 
+<font color="yellow">
+<marquee> We are very sorry as we cannot find a related product, we are improving on our search functionality and advice you to kindly check for the product in best match category given on the home page </marquee>
+</h1>
+<br>
+<br>
+<h4>
+<h3>
+<u>
+The error might be due to :
+</u>
+</h3>
+<br>
+<br>
+>>> No Perfect Match (Because in our search, Product (say) and product are different, as one starts with P and other with p)
+<br>
+<br>
+>>> Not exact name (Like Micromax won't give a result but specifically Micromax IN 1 will produce a result)
+<br>
+<br>
+>>> Product actually doesn't exist
+<br>
+<br>
+>>> For Personal Care & Sanitation and arts and interior design there's no search functionality as the names under these are random and didn't produce good result
+<br>
+<br>
+>>> While we improve, we request you to use category-wise self-search for better results
+</h4>
+</body>
+     {% endblock %} 

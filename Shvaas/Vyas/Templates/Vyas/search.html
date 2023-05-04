@@ -1,0 +1,29 @@
+{% extends 'Vyas/basic.html' %}
+
+    <title>{% block title %} Shvaas - Search {% endblock %} </title>
+    {% block body %} 
+
+    <style>
+body {
+  background-image: url('https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-10-full.jpg');
+}
+
+.navbar-dark{
+          background: rgb(34,193,195);
+background: linear-gradient(197deg, rgba(34,193,195,1) 0%, rgba(187,122,190,0.4448967086834734) 79%, rgba(253,187,45,1) 100%);
+        }
+</style>
+<center>
+<br>
+<br>
+<h1> Your Search Returned Following Result :
+<br>
+<a class= "btn btn-dark" href={{ query }}> <h3> Click Here To View </h3>
+</a>
+<br>
+<br>
+<br>
+<marquee> <font color = "#14916e"> This link will lead you to the category page of our website where you can find the product in the carousels </font> </marquee>
+</h1>
+</center>
+     {% endblock %} 

@@ -1,0 +1,257 @@
+
+{% extends 'Vyas/basic.html' %}
+
+{% block title %} Home Appliances {% endblock %}
+
+{% block css %}    
+
+body {
+  background-image: url('https://images2.alphacoders.com/600/600022.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+    .navbar-dark{
+      background: rgb(36, 0, 0);
+background: linear-gradient(90deg, rgba(0, 36, 3, 0.37) 0%, rgba(82, 21, 77, 0.14) 35%, rgba(0,212,255,0.1227678571428571) 100%);
+    }
+    
+    div.ex1 {
+      
+      background-color: white);
+      width: 260px;
+      height: 210px;
+      overflow: scroll;
+    }
+    
+            .col-md-3
+            {
+            display: inline-block;
+            margin-left:-4px;
+            }
+            .carousel-indicators .active {
+            background-color: blue;
+              }
+            .col-md-3 img{
+            width:100%;
+            
+            }
+            body .carousel-indicator li{
+            background-color: blue;
+            }
+            body .carousel-indicators{
+            bottom: 0;
+            }
+            body .carousel-control-prev-icon,
+            body .carousel-control-next-icon{
+            background-color: blue;
+            }
+             body .no-padding{
+             padding-left: 0;
+             padding-right: 0;
+             }
+
+{% endblock %}
+
+
+
+
+{% block body %} 
+
+{% load static %}
+<div class="container">
+   
+  <div id="demo" class="carousel slide my-3" data-ride="carousel">
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+
+       {% for i in range %}
+      <li data-target="#demo" data-slide-to="{{i}}" ></li>
+      {% endfor %}
+    </ul>
+
+    <!--Slideshow starts here -->
+    <div class="container carousel-inner no-padding">
+      <div class="carousel-item active">
+
+     
+
+
+        {% for i in product %}
+        <div class="col-xs-3 col-sm-3 col-md-3">
+          <div class="card" style="width: auto;" >
+            <img src='/media/{{i.product_image}}' class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title" id="namepr{{i.id}}">{{i.appliance_name}}</h5>
+              <h6 class="card-title"> - {{i.brand_name}}</h6>
+              <p class="card-text">
+                
+              
+                <ul>
+                  <li> {{i.d1}}</li>
+                  <li> {{i.d2}}</li>
+                  <li> {{i.d3}}</li>
+                  
+                    
+                  {% if i.category == "Washing Machine"  %}
+                  <li>
+                    capacity - {{i.wm_capacity}}
+                  </li>
+                  <li>
+                    star - {{i.star}}
+                  </li>
+                  {%elif i.category == "Air Conditioner"%}
+                  <li>
+                    Type - {{i.ac_type}} 
+                  </li>
+                  <li>
+                    {{i.ac_ton}}
+                  </li>
+                  {% elif i.category == "Television" %}
+                  <li>
+                    Resolution - {{i.tv_resolution}} p
+                  </li>
+                  <li>
+                    Size - {{i.tv_size}} cm
+                  </li>
+                  <li>
+                    Refresh Rate - {{i.tv_refresh_rate}}
+                  </li>
+
+                  {% endif %}
+                    
+                  <li>
+                    <b>PRICE - <span id="pricepr{{i.id}}">{{i.price}}</span> INR   </b>
+                  </li>
+
+                  
+                  
+
+
+                </ul>
+                
+              
+
+
+              </p>
+              <a href="{{ i.off_site }}" class="btn btn-warning"> Official Site </a>
+              <br>
+              <br>
+              <span id="divpr{{i.id}}" class="divpr">
+                <button id= "pr{{i.id}}"class="btn btn-primary cartHomeAppliances">Add To Cart</button>
+                </span>
+            </div>
+          </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+      </div>
+      <div class="carousel-item">
+        {% endif %}
+
+        {% endfor  %}
+      </div>
+
+
+
+    </div>
+  </div>
+
+    <!-- left and right controls for the slide -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+
+
+{% endblock%}
+
+  </div>
+
+  {% block js %}   
+  <script>
+    // Find out the cartHomeAppliances items from localStorage
+   if (localStorage.getItem('cartHomeAppliances') == null) {
+       var cartHomeAppliances = {};
+   } else {
+       cartHomeAppliances = JSON.parse(localStorage.getItem('cartHomeAppliances'));
+       updateCart(cartHomeAppliances);
+   }
+   // If the add to cartHomeAppliances button is clicked, add/increment the item
+   //$('.cartHomeAppliances').click(function() {
+   $('.divpr').on('click', 'button.cartHomeAppliances', function() {
+       var idstr = this.id.toString();
+       if (cartHomeAppliances[idstr] != undefined) {
+           qty = cartHomeAppliances[idstr][0] + 1;
+           
+       } else {
+           qty = 1;
+           name = document.getElementById('name'+idstr).innerHTML;
+           price = document.getElementById('price'+idstr).innerHTML;
+           cartHomeAppliances[idstr] = [qty, name ,parseInt(price)];
+   
+       }
+       updateCart(cartHomeAppliances);
+   });
+   //Add Popover to cartHomeAppliances
+   $('#popcart').popover();
+   updatePopover(cartHomeAppliances);
+   
+   function updatePopover(cartHomeAppliances) {
+       console.log('We are inside updatePopover');
+       var popStr = "";
+       
+       
+       popStr = popStr + "</div> <a href='/Vyas/Checkout'><button class='btn btn-primary' id ='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+       
+       document.getElementById('popcart').setAttribute('data-content', popStr);
+       $('#popcart').popover('show');
+   }
+   
+   function clearCart() {
+       cartHomeAppliances = JSON.parse(localStorage.getItem('cartHomeAppliances'));
+       for (var item in cartHomeAppliances) {
+           document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cartHomeAppliances">Add To Cart</button>'
+       }
+       
+       cartHomeAppliances = {};
+       updateCart(cartHomeAppliances);
+       localStorage.clear();
+       document.getElementById('clearCart').innerHTML=" <button class='btn btn-dark'  id ='clearCart'>Cleared</button>     " 
+   
+   }
+   
+   function updateCart(cartHomeAppliances) {
+       var sum = 0;
+       for (var item in cartHomeAppliances) {
+           sum = sum + cartHomeAppliances[item][0];
+           document.getElementById('div'+item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cartHomeAppliances[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+       }
+       localStorage.setItem('cartHomeAppliances', JSON.stringify(cartHomeAppliances));
+       
+       console.log(cartHomeAppliances);
+       updatePopover(cartHomeAppliances);
+   }
+   // If plus or minus button is clicked, change the cartHomeAppliances as well as the display value
+   $('.divpr').on("click", "button.minus", function() {
+       a = this.id.slice(7, );
+       cartHomeAppliances['pr' + a][0] = cartHomeAppliances['pr' + a][0] - 1;
+       cartHomeAppliances['pr' + a][0] = Math.max(0, cartHomeAppliances['pr' + a][0]);
+       document.getElementById('valpr' + a).innerHTML = cartHomeAppliances['pr' + a][0];
+       updateCart(cartHomeAppliances);
+   });
+   $('.divpr').on("click", "button.plus", function() {
+       a = this.id.slice(6, );
+       cartHomeAppliances['pr' + a][0] = cartHomeAppliances['pr' + a][0] + 1;
+       document.getElementById('valpr' + a).innerHTML = cartHomeAppliances['pr' + a][0];
+       updateCart(cartHomeAppliances);
+   });
+         
+         
+         </script>
+       
+       
+
+{% endblock %}

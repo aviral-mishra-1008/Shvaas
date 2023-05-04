@@ -1,0 +1,18 @@
+{% extends 'Vyas/basic.html' %}
+
+    <title>{% block title %} Shvaas - Track Your Order {% endblock %} </title>
+    {% block body %} 
+    <style>
+body {
+  background-image: url('https://gifimage.net/wp-content/uploads/2017/09/background-gif-4.gif');
+}
+
+</style>
+<h3> <font color = "yellow"> Enter Your Order ID </h3>
+<h6> Make sure not to include spaces and enter the order id at the start of the text box: </h6>
+<form action='/Vyas/Track_result/' method = 'post'> {% csrf_token %}
+   <textarea name = "text" spellcheck="true" data-ms-editor="true" style="margin: 2px; color:white; width: 300px; height: 90px; background-image: url('https://media.giphy.com/media/DXp2Qp5RsNHkA/giphy.gif')"> </textarea>
+   <br>
+   <button type='submit' class="btn btn-warning mx-2"> Get Me Status Update</bUTTON>
+
+     {% endblock %} 

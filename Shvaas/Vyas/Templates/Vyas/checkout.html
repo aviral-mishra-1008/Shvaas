@@ -1,0 +1,584 @@
+{% extends 'Vyas/basic.html' %}
+
+
+
+    <title>{% block title %} Shvaas - Cart/Checkout {% endblock %} </title>
+    {% block css %}
+    
+
+    {% endblock %}
+    {% block body %} 
+    {% comment %} <a class="btn btn-warning" href="/Vyas/Order"> Click To Confirm </a> {% endcomment %}
+    <style>
+body {
+  background-image: url('https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-2-full.jpg');
+}
+</style>
+<div class="container">
+    <div class="col my-4">
+        <h2> <font color="cycan"> Step 1 - Sublicroke Checkout - Review Your Cart Items</h2>
+        <div class="my-4">
+            <ul class="list-group " id="items">
+            </ul>
+            <div class="btn btn-warning"> Your Total amount is <span id="totalPrice"> </span> INR </div>
+        </div>
+    </div>
+    <div class="col my-4">
+        <h2>Step 2 - Enter Address & Other Details:</h2>
+        <form method="POST" action="/Vyas/Checkout/">{% csrf_token %}
+            <input type="hidden" name="itemsJson" id="itemsJson">
+            <input type="hidden" name="amount" id="amount">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputname">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="email" name="email"placeholder="Email">
+                </div>
+            </div>
+            <div class="form group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St">
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Address line 2</label>
+                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="city" name="city">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="zip_code" name="zip_code" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputZip">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone">
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input"  name = "cod" type="checkbox" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Cash On Delivery</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input"  name = "upi" type="checkbox" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">UPI Pay</label>
+            </div>   
+            <button type="submit" class="btn btn-warning">Place Order</button>
+        </form>
+    </div>
+    
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+
+    cart = localStorage.getItem('cartHomeAppliances')+localStorage.getItem('cartClothing')+localStorage.getItem('cartSports')+localStorage.getItem('cartSoftware') + localStorage.getItem('cartSmartWare')+localStorage.getItem('cartCare')+localStorage.getItem('cartMusic')+localStorage.getItem('cartGrocery') + localStorage.getItem('cartBook')+localStorage.getItem('cartAyurveda')+localStorage.getItem('cartArt')+localStorage.getItem('cartEducation');
+    
+    if ($.isEmptyObject(cart)) {
+        // If object is empty=
+        mystr = "<p>Your cart is empty, please add some items before checking out ! </p>"
+        $('#items').append(mystr);
+    }
+    
+    
+    
+    </script>
+    
+    
+    
+    
+    
+    <script>
+    
+    if (localStorage.getItem('cartHomeAppliances') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cartHomeAppliances'));
+    }
+    console.log(cart);
+    var sum = 0;
+    var totalPriceHomeAppliances = 0;
+    for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceHomeAppliances = totalPriceHomeAppliances + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}
+                            <span class="btn btn-dark my-2">Quantity : ${qty}</span>
+                            <span>${itemPrice} /unit</span>
+                        </li>`
+            $('#items').append(mystr);
+    }
+    $('#itemsJson').val(JSON.stringify(cart));
+
+    
+    </script>
+    
+    <script>
+        
+        if (localStorage.getItem('cartSoftware') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cartSoftware'));
+        }
+        console.log(cart);
+        var sum = 0;
+        var totalPriceSoftware = 0;
+        for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceSoftware = totalPriceSoftware + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}
+                            <span class="btn btn-dark">Quantity : ${qty}</span>
+                            <span>${itemPrice} /unit</span>
+                        </li>`
+            $('#items').append(mystr);
+        }
+        $('#itemsJson').val(JSON.stringify(cart));
+        
+        </script>
+    
+    <script>
+        if (localStorage.getItem('cartClothing') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cartClothing'));
+        }
+        console.log(cart);
+        var sum = 0;
+        var totalPriceClothing = 0;
+        for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceClothing = totalPriceClothing + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}
+                            <span class="btn btn-dark">Quantity : ${qty}</span>
+                            <span>${itemPrice} INR</span>
+                        </li>`
+            $('#items').append(mystr);
+        }
+        $('#itemsJson').val(JSON.stringify(cart));
+        
+        
+        </script>
+    <script>
+        if (localStorage.getItem('cartSports') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cartSports'));
+        }
+        console.log(cart);
+        var sum = 0;
+        var totalPriceSports = 0;
+        for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceSports = totalPriceSports + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}<span class="btn btn-dark my-2">Quantity:${qty}</span>
+                            <span>${itemPrice} /unit</span>
+                        </li>`
+            $('#items').append(mystr);
+        }
+        $('#itemsJson').val(JSON.stringify(cart));
+
+        
+        </script> 
+        
+        
+        <script>
+    
+            if (localStorage.getItem('cartArt') == null) {
+                var cart = {};
+            } else {
+                cart = JSON.parse(localStorage.getItem('cartArt'));
+            }
+            console.log(cart);
+            var sum = 0;
+            var totalPriceArt = 0;
+            for (item in cart) {
+                
+                    let name = cart[item][1];
+                    let qty = cart[item][0];
+                    let itemPrice = cart[item][2]
+                    sum = sum + qty;
+                    totalPriceArt = totalPriceArt + qty * itemPrice;
+                    var
+                    mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                   ${name}
+                                    <span class="btn btn-dark my-2">Quantity : ${qty}</span>
+                                    <span>${itemPrice} /unit</span>
+                                </li>`
+                    $('#items').append(mystr);
+            }
+            $('#itemsJson').val(JSON.stringify(cart));
+            
+            </script>
+            
+            <script>
+                
+                if (localStorage.getItem('cartAyurveda') == null) {
+                    var cart = {};
+                } else {
+                    cart = JSON.parse(localStorage.getItem('cartAyurveda'));
+                }
+                console.log(cart);
+                var sum = 0;
+                var totalPriceAyurveda = 0;
+                for (item in cart) {
+                
+                    let name = cart[item][1];
+                    let qty = cart[item][0];
+                    let itemPrice = cart[item][2]
+                    sum = sum + qty;
+                    totalPriceAyurveda = totalPriceAyurveda + qty * itemPrice;
+                    var
+                    mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                   ${name}
+                                    <span class="btn btn-dark">Quantity : ${qty}</span>
+                                    <span>${itemPrice} /unit</span>
+                                </li>`
+                    $('#items').append(mystr);
+                }
+                $('#itemsJson').val(JSON.stringify(cart));
+                
+                
+                </script>
+            
+            <script>
+                if (localStorage.getItem('cartBook') == null) {
+                    var cart = {};
+                } else {
+                    cart = JSON.parse(localStorage.getItem('cartBook'));
+                }
+                console.log(cart);
+                var sum = 0;
+                var totalPriceBook = 0;
+                for (item in cart) {
+                
+                    let name = cart[item][1];
+                    let qty = cart[item][0];
+                    let itemPrice = cart[item][2]
+                    sum = sum + qty;
+                    totalPriceBook = totalPriceBook + qty * itemPrice;
+                    var
+                    mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                   ${name}
+                                    <span class="btn btn-dark">Quantity : ${qty}</span>
+                                    <span>${itemPrice} /unit</span>
+                                </li>`
+                    $('#items').append(mystr);
+                }
+                
+                $('#itemsJson').val(JSON.stringify(cart));
+                
+                </script>
+
+
+<script>
+    
+    if (localStorage.getItem('cartEducation') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cartEducation'));
+    }
+    console.log(cart);
+    var sum = 0;
+    var totalPriceEducation = 0;
+    for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceEducation = totalPriceEducation + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}
+                            <span class="btn btn-dark my-2">Quantity : ${qty}</span>
+                            <span>${itemPrice} /unit</span>
+                        </li>`
+            $('#items').append(mystr);
+    }
+    $('#itemsJson').val(JSON.stringify(cart));
+    
+    </script>
+    
+    <script>
+        
+        if (localStorage.getItem('cartGrocery') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cartGrocery'));
+        }
+        console.log(cart);
+        var sum = 0;
+        var totalPriceGrocery = 0;
+        for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceGrocery = totalPriceGrocery + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}
+                            <span class="btn btn-dark">Quantity : ${qty}</span>
+                            <span>${itemPrice} /unit</span>
+                        </li>`
+            $('#items').append(mystr);
+        }
+        $('#itemsJson').val(JSON.stringify(cart));
+        
+        
+        </script>
+    
+    <script>
+        if (localStorage.getItem('cartMusic') == null) {
+            var cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cartMusic'));
+        }
+        console.log(cart);
+        var sum = 0;
+        var totalPriceMusic = 0;
+        for (item in cart) {
+        
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            let itemPrice = cart[item][2]
+            sum = sum + qty;
+            totalPriceMusic = totalPriceMusic + qty * itemPrice;
+            var
+            mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                           ${name}
+                            <span class="btn btn-dark">Quantity : ${qty}</span>
+                            <span>${itemPrice} /unit</span>
+                        </li>`
+            $('#items').append(mystr);
+        }
+        $('#itemsJson').val(JSON.stringify(cart));
+        
+        
+        </script>
+
+<script>
+        
+    if (localStorage.getItem('cartCare') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cartCare'));
+    }
+    console.log(cart);
+    var sum = 0;
+    var totalPriceCare = 0;
+    for (item in cart) {
+    
+        let name = cart[item][1];
+        let qty = cart[item][0];
+        let itemPrice = cart[item][2]
+        sum = sum + qty;
+        totalPriceCare = totalPriceCare + qty * itemPrice;
+        var
+        mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                       ${name}
+                        <span class="btn btn-dark">Quantity : ${qty}</span>
+                        <span>${itemPrice} /unit</span>
+                    </li>`
+        $('#items').append(mystr);
+    }
+    $('#itemsJson').val(JSON.stringify(cart));
+    
+    
+    </script>
+
+<script>
+    if (localStorage.getItem('cartSmartware') == null) {
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cartSmartware'));
+    }
+    console.log(cart);
+    var sum = 0;
+    var totalPriceSmartware = 0;
+    for (item in cart) {
+    
+        let name = cart[item][1];
+        let qty = cart[item][0];
+        let itemPrice = cart[item][2]
+        sum = sum + qty;
+        totalPriceSmartware = totalPriceSmartware + qty * itemPrice;
+        var
+        mystr = `        <li class="list-group-item d-flex justify-content-between align-items-center">
+                       ${name}
+                        <span class="btn btn-dark">Quantity : ${qty}</span>
+                        <span>${itemPrice} /unit</span>
+                    </li>`
+        $('#items').append(mystr);
+    }
+    $('#itemsJson').val(JSON.stringify(cart));
+    
+    
+    </script>
+    
+    <script>
+        
+        var GrandTotal =  totalPriceHomeAppliances + totalPriceClothing + totalPriceSoftware + totalPriceSports + totalPriceArt + totalPriceAyurveda + totalPriceBook + totalPriceEducation + totalPriceGrocery + totalPriceMusic + totalPriceCare + totalPriceSmartware
+        document.getElementById("totalPrice").innerHTML = GrandTotal;
+
+    </script>
+    <script>
+    
+        var cart = "";
+        
+        if (localStorage.getItem('cartHomeAppliances') != null) {
+            cart = cart + localStorage.getItem('cartHomeAppliances');
+        
+        }
+        
+        if (localStorage.getItem('cartClothing') != null) {
+            cart = cart + localStorage.getItem('cartClothing');
+        
+        }
+        
+        if (localStorage.getItem('cartSports') != null) {
+            cart = cart + localStorage.getItem('cartSports');
+        
+        }
+        
+        if (localStorage.getItem('cartSoftware') != null) {
+            cart = cart + localStorage.getItem('cartSoftware');
+        
+        }
+        if (localStorage.getItem('cartSmartware') != null) {
+            cart = cart + localStorage.getItem('cartSmartware');
+        
+        }
+        
+        if (localStorage.getItem('cartCare') != null) {
+            cart = cart + localStorage.getItem('cartCare');
+        
+        }
+        
+        if (localStorage.getItem('cartMusic') != null) {
+            cart = cart + localStorage.getItem('cartMusic');
+        
+        }
+        
+        if (localStorage.getItem('cartGrocery') != null) {
+            cart = cart + localStorage.getItem('cartGrocery');
+        
+        }
+        if (localStorage.getItem('cartEducation') != null) {
+            cart = cart + localStorage.getItem('cartEducation');
+        
+        }
+        
+        if (localStorage.getItem('cartBook') != null) {
+            cart = cart + localStorage.getItem('cartBook');
+        
+        }
+        
+        if (localStorage.getItem('cartArt') != null) {
+            cart = cart + localStorage.getItem('cartArt');
+        
+        }
+        
+        if (localStorage.getItem('cartAyurveda') != null) {
+            cart = cart + localStorage.getItem('cartAyurveda');
+        
+        }
+        if (localStorage.getItem('cartArt') != null) {
+            cart = cart + localStorage.getItem('cartArt');
+        
+        }
+        
+        if (localStorage.getItem('cartAyurveda') != null) {
+            cart = cart + localStorage.getItem('cartAyurveda');
+        
+        }
+        
+        if (localStorage.getItem('cartBook') != null) {
+            cart = cart + localStorage.getItem('cartBook');
+        
+        }
+        
+        if (localStorage.getItem('cartEducation') != null) {
+            cart = cart + localStorage.getItem('cartEducation');
+        
+        }
+    
+        if (localStorage.getItem('cartGrocery') != null) {
+            cart = cart + localStorage.getItem('cartGrocery');
+        
+        }
+        
+        if (localStorage.getItem('cartMusic') != null) {
+            cart = cart + localStorage.getItem('cartMusic');
+        
+        }
+        
+        if (localStorage.getItem('cartSmartware') != null) {
+            cart = cart + localStorage.getItem('cartSmartware');
+        
+        }
+        
+        if (localStorage.getItem('cartCare') != null) {
+            cart = cart + localStorage.getItem('cartCare');
+        
+        }
+        $('#itemsJson').val(JSON.stringify(cart));
+        
+        
+        
+        </script>
+    
+    
+    <script>
+    {% if thank %}
+    alert("Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker")
+    localStorage.clear();
+    document.location="/Vyas";
+    {% endif %}
+    
+
+    $('#amount').val($('#totalPrice').html())
+
+    
+    
+    </script> 
+
+{% endblock %}
+
+
+

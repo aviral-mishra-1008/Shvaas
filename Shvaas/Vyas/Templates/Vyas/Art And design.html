@@ -1,0 +1,218 @@
+{% extends 'Vyas/basic.html' %}
+{%block title%} Shvaas Interior Decors {% endblock %}
+{% block css %}
+
+        body {
+        background-image: url('https://loveincorporated.blob.core.windows.net/contentimages/gallery/3c2220ff-f23c-4bc8-90cd-23dd2ab1a2d9-norsu-gallery-wall-interior-design-ideas.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        }
+        .col-md-3 {
+            display: inline-block;
+            margin-left: -4px;
+        }
+
+        .col-md-3 {
+            width: 100%;
+            height: auto;
+        }
+
+
+
+        body .no-padding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .carousel-control-prev-icon {
+            background: black no-repeat center center;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+        }
+
+        .carousel-control-next-icon {
+            background: black no-repeat center center;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
+
+        }
+        body .carousel-indicators{
+        bottom:0;
+        }
+
+        .carousel-indicators .active{
+        background-color: blue;
+        }
+
+        .col-md-3 img{
+         width:100%;
+         height:auto;
+        }  
+
+.navbar-dark{
+          background: rgb(59,48,23);
+background: radial-gradient(circle, rgba(59,48,23,0.7502188375350141) 0%, rgba(209,67,23,0.75) 100%);
+        }
+    {% endblock %}
+{% block body %}
+{% load static %}
+
+
+
+<!--        carousel indicators starts from here-->
+
+<div class="container" xmlns:data="http://www.w3.org/1999/xhtml">
+    <div id="demo" class="carousel slide my-3" data-ride="carousel">'
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+    {% for i in range %}
+       <li data-target="#demo" data-slide-to="{{i}}" ></li>
+    {% endfor %}
+</ul>
+
+<!--        slideshow starts here-->
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+            
+           
+            {% for i in des %}
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <div class="card" style="width: auto;">
+                <img src='/media/{{i.Art_image}}' class="card-img-top" alt="...">
+                <div class="card-body">
+                  <b> <h5 class="card-title" id="namepr{{i.id}}">{{i.Art_name}} </h5> </b>
+                  <br>
+                  <br>
+                  {{ i.sub_desc }}
+                  <br>
+                  <br>
+                   <u>Company</u> :  {{i.Art_company}}
+                   <br>
+                   <u>Type</u> :  {{i.Art_type}}
+                   <br>
+                   <u>For the place</u> : {{i.for_place}}
+                   <br>
+                   <br>
+                   <u>Description</u>:  {{i.Art_description}}
+                   <br>
+                   <br>
+                   <u>Price</u> : Rs. <span id="pricepr{{i.id}}">{{i.Art_price}}</span>
+                   <span id="divpr{{i.id}}" class="divpr">
+                    <button id= "pr{{i.id}}"class="btn btn-primary cartArt">Add To Cart</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+             </div><div class="carousel-item">
+            {% endif %}
+
+            {% endfor %}
+      </div>
+
+      </div>
+        </div>
+
+<a class="carousel-control-prev " href="#demo" role="button" data-slide="prev">
+   <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+ </div>
+ {% endblock %}
+
+
+ {% block js %}   
+ <script>
+// Find out the cartArt items from localStorage
+if (localStorage.getItem('cartArt') == null) {
+   var cartArt = {};
+} else {
+   cartArt = JSON.parse(localStorage.getItem('cartArt'));
+   updateCart(cartArt);
+}
+// If the add to cartArt button is clicked, add/increment the item
+//$('.cartArt').click(function() {
+$('.divpr').on('click', 'button.cartArt', function() {
+   var idstr = this.id.toString();
+   if (cartArt[idstr] != undefined) {
+       qty = cartArt[idstr][0] + 1;
+       
+   } else {
+       qty = 1;
+       name = document.getElementById('name'+idstr).innerHTML;
+       price = document.getElementById('price'+idstr).innerHTML;
+       cartArt[idstr] = [qty, name , parseInt(price)];
+
+   }
+   updateCart(cartArt);
+});
+//Add Popover to cartArt
+$('#popcart').popover();
+updatePopover(cartArt);
+
+function updatePopover(cartArt) {
+   console.log('We are inside updatePopover');
+   var popStr = "";
+   
+   popStr = popStr + "</div> <a href='/Vyas/Checkout'><button class='btn btn-primary' id ='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+   
+   document.getElementById('popcart').setAttribute('data-content', popStr);
+   $('#popcart').popover('show');
+}
+
+function clearCart() {
+   cartArt = JSON.parse(localStorage.getItem('cartArt'));
+   for (var item in cartArt) {
+       document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cartArt">Add To Cart</button>'
+   }
+   cartArt = {};
+    updateCart(cartArt);
+    localStorage.clear();
+    document.getElementById('clearCart').innerHTML=" <button class='btn btn-dark'  id ='clearCart'>Cleared</button>     " 
+}
+
+function updateCart(cartArt) {
+   var sum = 0;
+   for (var item in cartArt) {
+       sum = sum + cartArt[item][0];
+       document.getElementById('div'+item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cartArt[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+   }
+   localStorage.setItem('cartArt', JSON.stringify(cartArt));
+   
+   console.log(cartArt);
+   updatePopover(cartArt);
+}
+// If plus or minus button is clicked, change the cartArt as well as the display value
+$('.divpr').on("click", "button.minus", function() {
+   a = this.id.slice(7, );
+   cartArt['pr' + a][0] = cartArt['pr' + a][0] - 1;
+   cartArt['pr' + a][0] = Math.max(0, cartArt['pr' + a][0]);
+   document.getElementById('valpr' + a).innerHTML = cartArt['pr' + a][0];
+   updateCart(cartArt);
+});
+$('.divpr').on("click", "button.plus", function() {
+   a = this.id.slice(6, );
+   cartArt['pr' + a][0] = cartArt['pr' + a][0] + 1;
+   document.getElementById('valpr' + a).innerHTML = cartArt['pr' + a][0];
+   updateCart(cartArt);
+});
+   
+   
+   </script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

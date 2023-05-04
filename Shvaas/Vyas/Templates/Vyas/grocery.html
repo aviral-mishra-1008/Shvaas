@@ -1,0 +1,204 @@
+{% extends 'Vyas/basic.html' %}
+{% block title %} Shvaas Kirana Store {%endblock%}
+{% block css %}
+
+
+        body {
+        background-image: url('https://wallpaperxyz.com/wp-content/uploads/Website-Background-Images-HD-Free-Download-Wallpaperxyz.com-11.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        }
+        .col-md-3 {
+            display: inline-block;
+            margin-left: -4px;
+        }
+
+        .col-md-3 {
+            width: 100%;
+            height: auto;
+        }
+
+
+
+        body .no-padding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .carousel-control-prev-icon {
+            background: black no-repeat center center;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+        }
+
+        .carousel-control-next-icon {
+            background: black no-repeat center center;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
+
+        }
+        body .carousel-indicators{
+        bottom:0;
+        }
+
+        .carousel-indicators .active{
+        background-color: blue;
+        }
+
+        .col-md-3 img{
+         width:100%;
+         height:auto;
+        } 
+  
+
+    {% endblock %}
+{% block body %}
+{% load static %}
+
+
+
+<!--        carousel indicators starts from here-->
+
+<div class="container" xmlns:data="http://www.w3.org/1999/xhtml">
+    <div id="demo" class="carousel slide my-3" data-ride="carousel">'
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+    {% for i in range %}
+       <li data-target="#demo" data-slide-to="{{i}}" ></li>
+    {% endfor %}
+</ul>
+
+<!--        slideshow starts here-->
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+            
+            
+            {% for i in grocs %}
+            <div class="col-xs-3 col-sm-3 col-md-3">
+              <div class="card" style="width: auto;">
+                <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                <div class="card-body">
+                 <b> <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}} </h5> </b>
+                   <br>
+                   <br>
+                   {{ i.sub_desc }}
+                  <br>
+                  <br>
+                   Product Category :  {{i.category}}
+                   <br>
+                   <br>
+                   Description:  {{i.description}}
+                   <br>
+                   <br>
+                   Price : Rs. <span id="pricepr{{i.id}}">{{i.price}}</span>
+                   <span id="divpr{{i.id}}" class="divpr">
+                    <button id= "pr{{i.id}}"class="btn btn-primary cartGrocery">Add To Cart</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+             </div><div class="carousel-item">
+            {% endif %}
+
+            {% endfor %}
+      </div>
+
+      </div>
+        </div>
+
+<a class="carousel-control-prev " href="#demo" role="button" data-slide="prev">
+   <span class="carousel-control-prev-icon" ></span>
+   
+  </a>
+  <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" ></span>
+   
+  </a>
+ 
+ {% endblock %}
+</div>
+
+{% block js %}   
+<script>
+// Find out the cartGrocery items from localStorage
+if (localStorage.getItem('cartGrocery') == null) {
+  var cartGrocery = {};
+} else {
+  cartGrocery = JSON.parse(localStorage.getItem('cartGrocery'));
+  updateCart(cartGrocery);
+}
+// If the add to cartGrocery button is clicked, add/increment the item
+//$('.cartGrocery').click(function() {
+$('.divpr').on('click', 'button.cartGrocery', function() {
+  var idstr = this.id.toString();
+  if (cartGrocery[idstr] != undefined) {
+      qty = cartGrocery[idstr][0] + 1;
+      
+  } else {
+      qty = 1;
+      name = document.getElementById('name'+idstr).innerHTML;
+      price = document.getElementById('price'+idstr).innerHTML;
+      cartGrocery[idstr] = [qty, name , parseInt(price)];
+
+  }
+  updateCart(cartGrocery);
+});
+//Add Popover to cartGrocery
+$('#popcart').popover();
+updatePopover(cartGrocery);
+
+function updatePopover(cartGrocery) {
+  console.log('We are inside updatePopover');
+  var popStr = "";
+  
+  popStr = popStr + "</div> <a href='/Vyas/Checkout'><button class='btn btn-primary' id ='checkout'>View Cart</button></a> <button class='btn btn-primary' onclick='clearCart()' id ='clearCart'>Clear Cart</button>     "
+  
+  document.getElementById('popcart').setAttribute('data-content', popStr);
+  $('#popcart').popover('show');
+}
+
+function clearCart() {
+  cartGrocery = JSON.parse(localStorage.getItem('cartGrocery'));
+  for (var item in cartGrocery) {
+      document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cartGrocery">Add To Cart</button>'
+  }
+  cartGrocery = {};
+  updateCart(cartGrocery);
+  localStorage.clear();
+  document.getElementById('clearCart').innerHTML=" <button class='btn btn-dark'  id ='clearCart'>Cleared</button>     " 
+}
+
+function updateCart(cartGrocery) {
+  var sum = 0;
+  for (var item in cartGrocery) {
+      sum = sum + cartGrocery[item][0];
+      document.getElementById('div'+item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cartGrocery[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+  }
+  localStorage.setItem('cartGrocery', JSON.stringify(cartGrocery));
+  
+  console.log(cartGrocery);
+  updatePopover(cartGrocery);
+}
+// If plus or minus button is clicked, change the cartGrocery as well as the display value
+$('.divpr').on("click", "button.minus", function() {
+  a = this.id.slice(7, );
+  cartGrocery['pr' + a][0] = cartGrocery['pr' + a][0] - 1;
+  cartGrocery['pr' + a][0] = Math.max(0, cartGrocery['pr' + a][0]);
+  document.getElementById('valpr' + a).innerHTML = cartGrocery['pr' + a][0];
+  updateCart(cartGrocery);
+});
+$('.divpr').on("click", "button.plus", function() {
+  a = this.id.slice(6, );
+  cartGrocery['pr' + a][0] = cartGrocery['pr' + a][0] + 1;
+  document.getElementById('valpr' + a).innerHTML = cartGrocery['pr' + a][0];
+  updateCart(cartGrocery);
+});
+  
+  
+  </script>
+
+{% endblock %}
+
+
