@@ -25,8 +25,8 @@ urlpatterns = [
     path("Book/", views.copies, name = "Book"), #Displays book
     path("PCH/", views.care, name = "Care"), #displays care products
     path("Art/", views.arts, name="art"), #displays art section
-    path('DSN/', views.DSN, name='dsn'), #Displays DSN
     path('Order/', views.order, name="order_success_ping"), #Displays success message
     path('Track_result/', views.track_result, name="track_result"), #Handles order tracker result
-    path('Erono/', views.error_raise, name="error_page") #Raises error
+    path('Erono/', views.error_raise, name="error_page"), #Raises error
+    path('Loggin/',views.handeLogin, name="Loggin")
 ]

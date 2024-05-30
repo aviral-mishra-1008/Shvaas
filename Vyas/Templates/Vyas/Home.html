@@ -3,19 +3,9 @@
     <title>{% block title %} Shvaas Ltd. {% endblock %} </title>
     {% block body %} 
     {% load static %}
-   
-        <style>
-body {
-  background-image: url('https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-3-full.jpg');
-}
-</style>
-    <style>
-        .navbar-dark{
-           background: rgb(51,214,112);
-background: linear-gradient(197deg, rgba(51,214,112,0.7586221988795518) 0%, rgba(122,133,110,0.4448967086834734) 29%, rgba(0,2,0,1) 100%);
 
-        }
-</style>
+<div class="flex flex-auto justify-center">
+<div class="items-center m-2">
 <a class="btn btn-warning" href="/Vyas" role="button"> Take me to Shvaas! </a>
 <a class="btn btn-dark mx-3" href="#" role="button"> This video-page will introduce you to our team at who have made Shvaas and give insights into the project! </a>
 <a class="btn btn-warning mx-3" href="/Vyas/about" role="button"> Know More about Us </a>
@@ -24,7 +14,11 @@ background: linear-gradient(197deg, rgba(51,214,112,0.7586221988795518) 0%, rgba
 <video autoplay loop id="myVideo" controls style="object-fit: cover;" height='620' width='1350' >
   <source src={% static "Vyas/rain.mp4"  %} type="video/mp4">
 </video>
+</div>
 
+<div> </div>
+
+</div>
 
 
 

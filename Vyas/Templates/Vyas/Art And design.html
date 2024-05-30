@@ -1,128 +1,42 @@
 {% extends 'Vyas/basic.html' %}
 {%block title%} Shvaas Interior Decors {% endblock %}
 {% block css %}
-
-        body {
-        background-image: url('https://loveincorporated.blob.core.windows.net/contentimages/gallery/3c2220ff-f23c-4bc8-90cd-23dd2ab1a2d9-norsu-gallery-wall-interior-design-ideas.jpg');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        }
-        .col-md-3 {
-            display: inline-block;
-            margin-left: -4px;
-        }
-
-        .col-md-3 {
-            width: 100%;
-            height: auto;
-        }
-
-
-
-        body .no-padding {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .carousel-control-prev-icon {
-            background: black no-repeat center center;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
-        }
-
-        .carousel-control-next-icon {
-            background: black no-repeat center center;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
-
-        }
-        body .carousel-indicators{
-        bottom:0;
-        }
-
-        .carousel-indicators .active{
-        background-color: blue;
-        }
-
-        .col-md-3 img{
-         width:100%;
-         height:auto;
-        }  
-
-.navbar-dark{
-          background: rgb(59,48,23);
-background: radial-gradient(circle, rgba(59,48,23,0.7502188375350141) 0%, rgba(209,67,23,0.75) 100%);
-        }
     {% endblock %}
 {% block body %}
 {% load static %}
 
 
 
-<!--        carousel indicators starts from here-->
 
-<div class="container" xmlns:data="http://www.w3.org/1999/xhtml">
-    <div id="demo" class="carousel slide my-3" data-ride="carousel">'
-        <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-    {% for i in range %}
-       <li data-target="#demo" data-slide-to="{{i}}" ></li>
-    {% endfor %}
-</ul>
-
-<!--        slideshow starts here-->
-
-      <div class="carousel-inner">
-        <div class="carousel-item active">
             
-           
+<div class="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {% for i in des %}
-            <div class="col-xs-3 col-sm-3 col-md-3">
-              <div class="card" style="width: auto;">
-                <img src='/media/{{i.Art_image}}' class="card-img-top" alt="...">
-                <div class="card-body">
-                  <b> <h5 class="card-title" id="namepr{{i.id}}">{{i.Art_name}} </h5> </b>
-                  <br>
-                  <br>
-                  {{ i.sub_desc }}
-                  <br>
-                  <br>
-                   <u>Company</u> :  {{i.Art_company}}
-                   <br>
-                   <u>Type</u> :  {{i.Art_type}}
-                   <br>
-                   <u>For the place</u> : {{i.for_place}}
-                   <br>
-                   <br>
-                   <u>Description</u>:  {{i.Art_description}}
-                   <br>
-                   <br>
-                   <u>Price</u> : Rs. <span id="pricepr{{i.id}}">{{i.Art_price}}</span>
-                   <span id="divpr{{i.id}}" class="divpr">
+                <a rel="noopener noreferrer" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+                  <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="/media/{{i.Art_image}}" />
+                  <div class="p-6 space-y-2">
+                    <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline" id="namepr{{i.id}}"> {{i.Art_name}} </h3>
+                    <p>{{ i.sub_desc }} </p>
+                    <br>
+                    <u>Company</u> :  {{i.Art_company}}
+                    <br>
+                    <u>Type</u> :  {{i.Art_type}}
+                    <br>
+                    <u>For the place</u> : {{i.for_place}}
+                    <br>
+                    <br>
+                    <u>Description</u>:  {{i.Art_description}}
+                    <br>
+                    <br>
+                    <u>Price</u> : Rs. <span id="pricepr{{i.id}}">{{i.Art_price}}</span>
+                
+                <span id="divpr{{i.id}}" class="divpr">
                     <button id= "pr{{i.id}}"class="btn btn-primary cartArt">Add To Cart</button>
                   </span>
-                </div>
-              </div>
+                  </div>
+                </a>
+
+        {%endfor%}
             </div>
-
-            {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
-             </div><div class="carousel-item">
-            {% endif %}
-
-            {% endfor %}
-      </div>
-
-      </div>
-        </div>
-
-<a class="carousel-control-prev " href="#demo" role="button" data-slide="prev">
-   <span class="carousel-control-prev-icon" aria-hidden="true" ></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
- </div>
  {% endblock %}
 
 

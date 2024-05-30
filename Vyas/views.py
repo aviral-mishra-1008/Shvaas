@@ -1039,7 +1039,7 @@ def handeLogin(request):
             messages.error(request, "Invalid credentials! Please try again")
             return redirect("/Vyas/about")
 
-    return HttpResponse("404- Not found")
+    return render(request,"Vyas/login.html")
     
 def handelLogout(request):
     logout(request)

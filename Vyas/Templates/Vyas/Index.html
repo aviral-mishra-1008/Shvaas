@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script> 
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,187 +43,138 @@
   {% endblock %} 
   </head>
   {% block body %}  
-   <style>
-        .navbar-dark{
-        background: rgb(55,0,0);
-background: linear-gradient(90deg, rgba(55,0,0,0.7091211484593838) 3%, rgba(4,1,1,0.7091211484593838) 41%, rgba(143,89,17,0.6839110644257703) 96%);
-        }
-</style>
-   <style>
-body {
-  background-image: url('https://www.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-7-full.jpg');
-}
-  </style>
+
   {% load static %}
-<div class="container">
-<div id="demo" class="carousel slide my-3" data-ride="carousel">
-    <ul class="carousel-indicators">
-      <li data-target="#demo" data-slide-to="0" class="active"></li>
-      <li data-target="#demo" data-slide-to="1" ></li>
-      <li data-target="#demo" data-slide-to="2" ></li>
-    </ul>
+
 <br>
 <br>
+
+<div class="m-4 px-4">
  <a class="btn btn-warning" href="contact/"  role="button"> Want to sell with us? Register here! </a>
  <a class="btn btn-warning" href="collabs/"  role="button"> View Our Local Suppliers </a>
+</div>
  <br>
  <br>
     <!--Slideshow starts here -->
-    <div class="container carousel-inner no-padding">
 
-      <div class="carousel-item active">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='https://st1.bollywoodlife.com/wp-content/uploads/2018/11/jethalal.jpg##image/jpg' class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">Home appliances</h5>
-                <p class="card-text">Shop the best available home appliances for your house and get it delivered to your house with convinience and awesome discount offered by Shvaas.</p>
-                <a href="Home_Appliances/" class="btn btn-primary">Take Me There</a>
-            </div>
+      <div class="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <a rel="noopener noreferrer" href="Art/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+          <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/art.png" %}" />
+          <div class="p-6 space-y-2">
+            <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Art and Interior Design</h3>
+            <p> Shvaas offers you the best artworks, poster, design, wallpapers and other stuff of interior house decoration, you name it, we have it for you! Shop now at Shvaas.</p>
           </div>
-       </div>
+        </a>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/art.png" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Art and Interior Design</h5>
-              <p class="card-text"> Shvaas offers you the best artworks, poster, design, wallpapers and other stuff of interior house decoration, you name it, we have it for you! Shop now at Shvaas. </p>
-              <a href="Art/" class="btn btn-primary">Take Me There</a>
+          <!-- Smartware -->
+          <a rel="noopener noreferrer" href="Prodview1/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/smart.png" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Smartware</h3>
+              <p>Purchase your new smartphone, laptop, computer, and other office and daily use electronic devices today with Shvaas' offers!</p>
             </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/smart.png" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Smartware</h5>
-              <p class="card-text">Purchase your new smartphone, your laptop, your new computer and other office and daily use electronic devices today accompanied by the offers Shvaas!</p>
-              <a href="Prodview1/" class="btn btn-primary">Take Me There</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/microsoft2.png" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Softwares</h5>
-              <p class="card-text">Your favorite softwares are all here! You decide it, we offer softwares from Microsoft, Google, IBM, adobe and many more! Shop them today at Shvaas!</p>
-              <a href="Software/" class="btn btn-primary">Take Me There</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="carousel-item">
-      <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/PCH.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Sanitation and Personal Hygiene</h5>
-              <p class="card-text">Shvaas offers you tested and "society approved" sanitation and personal care products, we have linked the local suppliers and on every purchase in this category we give a sanitizer and mask for free!  </p>
-              <a href="PCH" class="btn btn-primary"> Take Me There </a>
-            </div>
-          </div>
-        </div>
+          </a>
         
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/grocery.jpeg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Grocery</h5>
-                <p class="card-text">Grocery is a daily need however such items are often purchased from the local stores due to instant availablity, at Shvaas we have linked the local businesses and added the comfort of our service! Shop Today!.</p>
-                <a href="grocery/" class="btn btn-primary">Take Me There</a>
+          <!-- Softwares -->
+          <a rel="noopener noreferrer" href="Software/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/microsoft2.png" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Softwares</h3>
+              <p>Your favorite software is all here! Choose from offerings by Microsoft, Google, IBM, Adobe, and more. Shop them today at Shvaas!</p>
             </div>
-          </div>
-        </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/clothing.jpg" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Fashion and Clothing</h5>
-              <p class="card-text"> "Quality Never Goes Out Of Style" - Levis
-              <br> 
-              We bring to you the best options of clothing and latest fashion trends of the world integrated with the best available options of ethnic and traditional clothing designs. 
-              </p>
-              <a href="Clothing/" class="btn btn-primary">Take Me There</a>
+          </a>
+        
+          <!-- Sanitation and Personal Hygiene -->
+          <a rel="noopener noreferrer" href="PCH" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/PCH.jpg" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Sanitation and Personal Hygiene</h3>
+              <p>Shvaas offers tested and "society approved" sanitation and personal care products. On every purchase in this category, we provide a free sanitizer and mask!</p>
             </div>
-          </div>
-        </div>
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/herbs.png" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Ayurvedic Products</h5>
-              <p class="card-text">Ayurvedic products are quite rare on many online platform but at Shvaas you can get the goodness of ayurveda delivered at your doorstep directly from local "pancharis"</p>
-              <a href="ayurveda/" class="btn btn-primary">Take Me There</a>
+          </a>
+        
+          <!-- Grocery -->
+          <a rel="noopener noreferrer" href="grocery/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/grocery.jpeg" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Grocery</h3>
+              <p>Grocery is a daily need, and at Shvaas, we've linked local businesses to provide instant availability. Shop today!</p>
             </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="carousel-item">
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='https://img.thrfun.com/img/221/151/books_tx2.jpg' class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Books and Goodreads</h5>
-                <p class="card-text">Books are the best friend of humans, we acnowledge this and bring to you the books from local bookstores and cross city connections as well, shop today and get big discounts from Shvaas</p>
-                <a href="Book/" class="btn btn-primary">Take Me There</a>
+          </a>
+        
+          <!-- Fashion and Clothing -->
+          <a rel="noopener noreferrer" href="Clothing/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/clothing.jpg" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Fashion and Clothing</h3>
+              <p>"Quality Never Goes Out Of Style" - Levis. Explore the best clothing options and latest fashion trends at Shvaas!</p>
             </div>
-          </div>
-       </div>
-
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/JEE.PNG" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">JEE Prep With Shvaas</h5>
-              <p class="card-text">You need the education related stuff, get the stationery, the books and copies from the big publishers of India and supplied by your favorite shops backed by discounts only and only from Shvaas.</p>
-              <a href="education/" class="btn btn-primary">Take Me There!</a>
+          </a>
+        
+          <!-- Ayurvedic Products -->
+          <a rel="noopener noreferrer" href="ayurveda/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/herbs.png" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Ayurvedic Products</h3>
+              <p>Get the goodness of Ayurveda delivered to your doorstep directly from local "pancharis" at Shvaas!</p>
             </div>
-          </div>
-        </div>
+          </a>
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='{% static "vyas/music2.png" %}' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Song and Music</h5>
-              <p class="card-text"> Songs refresh you, they decide the mood, we have a big collenction of pop, rock, metal, country and countless genre also we provide you top hindi hits,and traditional folk songs of the land at the cheapest price. We also sell music equipmemnts!</p>
-              <a href="Music/" class="btn btn-primary">Take Me There</a>
+          <!-- Books and Goodreads -->
+          <a href="Book/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://img.thrfun.com/img/221/151/books_tx2.jpg" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Books and Goodreads</h3>
+              <p>Books are the best friend of humans. We acknowledge this and bring you books from local bookstores and cross-city connections. Shop today and get big discounts from Shvaas!</p>
             </div>
-          </div>
-        </div>
+          </a>
+        
+          <!-- JEE Prep With Shvaas -->
+          <a href="education/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/JEE.PNG" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">JEE Prep With Shvaas</h3>
+              <p>You need education-related stuff. Get stationery, books, and copies from big publishers in India, supplied by your favorite shops. Backed by discounts, only from Shvaas!</p>
+            </div>
+          </a>
+        
+          <!-- Song and Music -->
+          <a href="Music/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="{% static "vyas/music2.png" %}" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Song and Music</h3>
+              <p>Songs refresh you and set the mood. We have a big collection of pop, rock, metal, country, and countless genres. We also provide top Hindi hits and traditional folk songs at the cheapest price. Plus, we sell music equipment!</p>
+            </div>
+          </a>
+        
+          <!-- Sports, Games and Fitness Equipments -->
+          <a href="Sports/" class="max-w-sm mx-auto group hover:no-underline focus:no-underline dark:bg-gray-50">
+            <img role="presentation" class="object-cover w-full rounded h-44 dark:bg-gray-500" src="https://th.bing.com/th/id/OIP.LJuVOq2HdAVN22zSUlIwvgHaHa?pid=ImgDet&rs=1" />
+            <div class="p-6 space-y-2">
+              <h3 class="text-2xl font-semibold group-hover:underline group-focus:underline">Sports, Games and Fitness Equipments</h3>
+              <p>Sports are essential for day-to-day physical activities and fun for kids. Let Shvaas supply you with the best equipment of your choice, supplemented by our awesome service!</p>
+            </div>
+          </a>        
 
-        <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card" style="width: 15REM;">
-            <img src='https://th.bing.com/th/id/OIP.LJuVOq2HdAVN22zSUlIwvgHaHa?pid=ImgDet&rs=1' class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Sports, Games and Fitness Equipments</h5>
-              <p class="card-text"> Sports are the day to day physical activities and a source of fun for kids. Let Shvaas fulfill this role in your life by supplying you the best equipments of your choice supplemented with our awesome service.</p>
-              <a href="Sports/" class="btn btn-primary">Take Me There</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div> 
+
     </div>
 
+<script> 
+  const images = document.querySelectorAll(".grid img"); 
+ 
+  const tl = gsap.timeline(); 
+ 
+  images.forEach((image, index) => { 
+    tl.fromTo( 
+      image, 
+      { x: "120%", opacity: 0, delay: index * 0.2 },  // Adjusted delay 
+      { x: "0%", opacity: 1, width: "100%" } 
+    ); 
+  }); 
+</script> 
 
-</div>
 
-    <!-- left and right controls for the slide -->
-    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </a>
   {% endblock %} 
 </html>
